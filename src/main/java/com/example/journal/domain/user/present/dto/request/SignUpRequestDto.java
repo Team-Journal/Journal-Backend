@@ -26,7 +26,7 @@ public class SignUpRequestDto {
 
 
     @NotBlank(message = "password는 Null, 공백, 띄어쓰기를 허용하지 않습니다.")
-    @Size(min = 8, message = "password는 8자 이상, 20자 이하여야 합니다.")
+    @Size(min = 8, max = 20, message = "password는 8자 이상, 20자 이하여야 합니다.")
     private String password;
 
 }
