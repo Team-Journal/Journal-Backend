@@ -15,6 +15,7 @@ import java.util.Date;
 @Component
 @RequiredArgsConstructor
 public class JwtTokenProvider {
+
     private final JwtProperties jwtProperties;
 
     public String generateAccessToken(String id){

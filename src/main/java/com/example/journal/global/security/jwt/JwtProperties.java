@@ -3,6 +3,8 @@ package com.example.journal.global.security.jwt;
 import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConstructorBinding;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import java.util.Base64;
 

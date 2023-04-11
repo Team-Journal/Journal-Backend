@@ -1,6 +1,7 @@
 package com.example.journal.global.config;
 
 
+import com.example.journal.global.security.jwt.JwtTokenProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -19,6 +20,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final ObjectMapper objectMapper;
+
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -40,6 +43,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin().disable()
 
-                .apply(new FilterConfig(objectMapper));
+                .apply(new FilterConfig(objectMapper, jwtTokenProvider));
     }
 }
