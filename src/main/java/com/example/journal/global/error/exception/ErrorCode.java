@@ -13,6 +13,9 @@ public enum ErrorCode {
     USER_ALREADY_JOINED(409, "USER-409-1", "User Already Joined"),
     INVALID_JWT(401, "JWT-401-1", "Invalid Jwt"),
     EXPIRED_JWT(401, "JWT-401-2", "Expired JWT"),
+
+    REFRESH_NOT_FOUND(404, "JWT-404-1", "RefreshToken Not Found"),
+
     PASSWORD_NOT_MATCH(401, "AUTH-401-1", "Password Not Match");
 
     private final int status;

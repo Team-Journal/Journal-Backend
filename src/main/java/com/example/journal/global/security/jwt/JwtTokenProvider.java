@@ -1,11 +1,17 @@
 package com.example.journal.global.security.jwt;
 
+import com.example.journal.domain.auth.domain.RefreshToken;
+import com.example.journal.domain.auth.domain.repository.RefreshTokenRepository;
 import com.example.journal.global.exception.InvalidJwtException;
+import com.example.journal.global.security.auth.AuthDetailsService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,10 +22,25 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class JwtTokenProvider {
 
+    private final AuthDetailsService authDetailsService;
+    private final RefreshTokenRepository refreshTokenRepository;
     private final JwtProperties jwtProperties;
 
     public String generateAccessToken(String id){
         return generateToken(id, "access", jwtProperties.getAccessExp());
+    }
+
+    public String generateRefreshToken(String id) {
+        String refresh = generateToken(id, "refresh", jwtProperties.getRefreshExp());
+
+        refreshTokenRepository.save(
+                RefreshToken.builder()
+                        .accountId(id)
+                        .token(refresh)
+                        .timeToLive(jwtProperties.getRefreshExp())
+                        .build()
+        );
+        return refresh;
     }
 
     public String generateToken(String id, String type, Long exp){
@@ -57,5 +78,10 @@ public class JwtTokenProvider {
 
     public String getTokenSubject(String token){
         return getTokenBody(token).getSubject();
+    }
+
+    public Authentication authentication(String token){
+        UserDetails userDetails = authDetailsService.loadUserByUsername(getTokenSubject(token));
+        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 }

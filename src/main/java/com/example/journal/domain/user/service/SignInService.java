@@ -33,8 +33,11 @@ public class SignInService {
 
         String access = jwtTokenProvider.generateAccessToken(request.getAccountId());
 
+        String refresh = jwtTokenProvider.generateRefreshToken(request.getAccountId());
+
         return TokenResponse.builder()
                 .accessToken(access)
+                .refreshToken(refresh)
                 .authority(user.getAuthority())
                 .build();
     }
