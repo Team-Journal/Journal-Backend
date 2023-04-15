@@ -16,7 +16,9 @@ public enum ErrorCode {
 
     REFRESH_NOT_FOUND(404, "JWT-404-1", "RefreshToken Not Found"),
 
-    PASSWORD_NOT_MATCH(401, "AUTH-401-1", "Password Not Match");
+    PASSWORD_NOT_MATCH(401, "AUTH-401-1", "Password Not Match"),
+
+    POST_NOT_FOUND(404, "POST-404-1", "Post Not Found");
 
     private final int status;
     private final String code;
