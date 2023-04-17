@@ -34,6 +34,12 @@ public class PostService {
     public void update(Long id, PostRequestDto request){
         Posts posts = postsRepository.findPostsById(id)
                 .orElseThrow(() -> PostNotFoundException.EXCEPTION);
+        User currentUser = userFacade.getCurrentUser();
+
+        if(!currentUser.getAccountId().equals(posts.getAuthor())) {
+            throw PostAccessDeniedException.EXCEPTION;
+        }
+
         posts.update(request.getTitle(), request.getContent());
     }
 
