@@ -2,8 +2,10 @@ package com.example.journal.domain.post.service;
 
 import com.example.journal.domain.post.domain.Posts;
 import com.example.journal.domain.post.domain.repository.PostsRepository;
+import com.example.journal.domain.post.exception.PostAccessDeniedException;
 import com.example.journal.domain.post.exception.PostNotFoundException;
 import com.example.journal.domain.post.present.dto.request.PostRequestDto;
+import com.example.journal.domain.user.domain.User;
 import com.example.journal.domain.user.facade.UserFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,5 +35,19 @@ public class PostService {
         Posts posts = postsRepository.findPostsById(id)
                 .orElseThrow(() -> PostNotFoundException.EXCEPTION);
         posts.update(request.getTitle(), request.getContent());
+    }
+
+    @Transactional
+    public void deleteById(Long id){
+        Posts posts = postsRepository.findPostsById(id)
+                .orElseThrow(() -> PostNotFoundException.EXCEPTION);
+
+        User currentUser = userFacade.getCurrentUser();
+
+        if(!currentUser.getAccountId().equals(posts.getAuthor())) {
+            throw PostAccessDeniedException.EXCEPTION;
+        }
+
+        postsRepository.deleteById(id);
     }
 }

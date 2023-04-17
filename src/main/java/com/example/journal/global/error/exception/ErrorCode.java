@@ -17,6 +17,7 @@ public enum ErrorCode {
     REFRESH_NOT_FOUND(404, "JWT-404-1", "RefreshToken Not Found"),
 
     PASSWORD_NOT_MATCH(401, "AUTH-401-1", "Password Not Match"),
+    POST_ACCESS_DENIED(403, "POST-403-1", "Access Denied"),
 
     POST_NOT_FOUND(404, "POST-404-1", "Post Not Found");
 

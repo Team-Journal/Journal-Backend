@@ -16,8 +16,13 @@ public class PostsController {
         postService.save(requestDto);
     }
 
-    @PostMapping("/post/{id}")
+    @PutMapping("/post/{id}")
     public void update(@PathVariable Long id, @RequestBody PostRequestDto request){
         postService.update(id, request);
+    }
+
+    @DeleteMapping("/post/{id}")
+    public void deleteById(@PathVariable Long id){
+        postService.deleteById(id);
     }
 }
