@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 public class PostsController {
     private final PostService postService;
 
+
+    @GetMapping()
+
     @PostMapping("/post")
     public void save(@RequestBody PostRequestDto requestDto) {
         postService.save(requestDto);
