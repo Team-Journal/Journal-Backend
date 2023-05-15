@@ -1,6 +1,7 @@
 package com.example.journal.domain.post.present;
 
 import com.example.journal.domain.post.present.dto.request.PostRequestDto;
+import com.example.journal.domain.post.present.dto.response.PostsListResponse;
 import com.example.journal.domain.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -12,9 +13,17 @@ public class PostsController {
     private final PostService postService;
 
 
-    @GetMapping()
+    @GetMapping("/")
+    public PostsListResponse get(){
+        return postService.findAllDesc();
+    }
 
-    @PostMapping("/post")
+    @GetMapping("/{username}")
+    public PostsListResponse getPostsByUsername(@PathVariable String username){
+        return postService.findPostsByAuthor(username);
+    }
+
+    @PostMapping("/")
     public void save(@RequestBody PostRequestDto requestDto) {
         postService.save(requestDto);
     }

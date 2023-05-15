@@ -37,6 +37,18 @@ public class PostService {
         return new PostsListResponse(postsList);
     }
 
+    @Transactional(readOnly = true)
+    public PostsListResponse findPostsByAuthor(String author){
+        List<PostsResponse> postsList = postsRepository.findPostsByAuthor(author).stream()
+                .map(posts -> new PostsResponse(
+                        posts.getId(),
+                        posts.getTitle(),
+                        posts.getContent(),
+                        posts.getAuthor()
+                )).collect(Collectors.toList());
+        return new PostsListResponse(postsList);
+    }
+
     @Transactional
     public void save(PostRequestDto request){
         postsRepository.save(
