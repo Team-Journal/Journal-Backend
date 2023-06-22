@@ -1,11 +1,14 @@
 package com.example.journal.domain.user.domain;
 
+import com.example.journal.domain.post.domain.Posts;
 import com.example.journal.global.enums.Authority;
+import com.mysql.cj.xdevapi.Collection;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Getter
 @Entity
@@ -36,6 +39,9 @@ public class User {
     @Column
     @Size(max = 40)
     private String intro;
+    
+    @OneToMany(mappedBy = "user")
+    private List<Posts> posts;
 
 
     @Builder

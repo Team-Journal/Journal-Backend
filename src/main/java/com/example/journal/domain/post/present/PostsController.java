@@ -23,18 +23,21 @@ public class PostsController {
         return postService.findPostsByAuthor(username);
     }
 
-    @PostMapping("/")
+    @PostMapping("/create")
     public void save(@RequestBody PostRequestDto requestDto) {
         postService.save(requestDto);
     }
 
-    @PutMapping("/post/{id}")
+    @PutMapping("/{id}")
     public void update(@PathVariable Long id, @RequestBody PostRequestDto request){
         postService.update(id, request);
     }
 
-    @DeleteMapping("/post/{id}")
+    @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id){
         postService.deleteById(id);
     }
+
+    @PutMapping("/pin/{id}")
+    public void updatePin(@PathVariable Long id) { postService.updatePin(id); }
 }

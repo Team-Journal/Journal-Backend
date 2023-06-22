@@ -14,4 +14,5 @@ public interface PostsRepository extends JpaRepository<Posts, Long> {
     List<Posts> findPostsByAuthor(String author);
     Optional<Posts> findById(Long id);
     Optional<Posts> deletePostsById(Long id);
+
 }

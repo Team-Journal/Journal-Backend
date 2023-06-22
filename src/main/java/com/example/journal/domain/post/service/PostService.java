@@ -10,6 +10,7 @@ import com.example.journal.domain.post.present.dto.response.PostsResponse;
 import com.example.journal.domain.user.domain.User;
 import com.example.journal.domain.user.facade.UserFacade;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -84,6 +85,23 @@ public class PostService {
             throw PostAccessDeniedException.EXCEPTION;
         }
 
-        postsRepository.deleteById(id);
+        postsRepository.deletePostsById(id);
+    }
+
+
+    @Transactional
+    public void updatePin(Long id){
+        Posts posts = postsRepository.findPostsById(id)
+                .orElseThrow(() -> PostNotFoundException.EXCEPTION);
+
+        User currentUser = userFacade.getCurrentUser();
+
+        if(!currentUser.getAccountId().equals(posts.getAuthor())) {
+            throw PostAccessDeniedException.EXCEPTION;
+        }
+
+        postsRepository.save(
+                posts.updatePin()
+        );
     }
 }
