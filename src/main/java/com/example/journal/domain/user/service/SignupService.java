@@ -18,9 +18,8 @@ public class SignupService {
     private final PasswordEncoder passwordEncoder;
 
     public void signup(SignUpRequestDto request){
-        if(userRepository.findByAccountId(request.getAccountId()).isPresent())
+        if(userRepository.findByAccountId(request.getAccountId()).isPresent() || userRepository.findByEmail(request.getEmail()).isPresent())
              throw AlreadyJoinedException.EXCEPTION;
-
 
         userRepository.save(
                 User.builder()
