@@ -2,10 +2,13 @@ package com.example.journal.domain.user.present;
 
 import com.example.journal.domain.user.present.dto.request.SignInRequestDto;
 import com.example.journal.domain.user.present.dto.request.SignUpRequestDto;
+import com.example.journal.domain.user.present.dto.request.UpdateIntroRequest;
 import com.example.journal.domain.user.present.dto.response.TokenResponse;
 import com.example.journal.domain.user.service.SignInService;
 import com.example.journal.domain.user.service.SignupService;
+import com.example.journal.domain.user.service.UserSettingService;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.sql.Update;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.http.HttpStatus;
@@ -20,6 +23,7 @@ public class UserController {
 
     private final SignupService signupService;
     private final SignInService signInService;
+    private final UserSettingService userSettingService;
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/signup")
@@ -30,5 +34,10 @@ public class UserController {
     @PostMapping("/signin")
     public TokenResponse signIn(@RequestBody @Valid SignInRequestDto request){
         return signInService.signIn(request);
+    }
+
+    @PutMapping("/intro")
+    public void updateIntro(@RequestBody @Valid UpdateIntroRequest request) {
+        userSettingService.IntroUpdate(request);
     }
 }

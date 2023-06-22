@@ -53,4 +53,9 @@ public class User {
         this.authority = authority;
         this.intro = intro;
     }
+
+    public User updateIntro(String intro){
+        this.intro = intro;
+        return this;
+    }
 }
