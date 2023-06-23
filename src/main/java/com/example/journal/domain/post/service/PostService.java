@@ -2,6 +2,7 @@ package com.example.journal.domain.post.service;
 
 import com.example.journal.domain.post.domain.Posts;
 import com.example.journal.domain.post.domain.repository.PostsRepository;
+import com.example.journal.domain.post.exception.PinExceededException;
 import com.example.journal.domain.post.exception.PostAccessDeniedException;
 import com.example.journal.domain.post.exception.PostNotFoundException;
 import com.example.journal.domain.post.present.dto.request.PostRequestDto;
@@ -91,17 +92,30 @@ public class PostService {
 
     @Transactional
     public void updatePin(Long id){
-        Posts posts = postsRepository.findPostsById(id)
+        Posts post = postsRepository.findPostsById(id)
                 .orElseThrow(() -> PostNotFoundException.EXCEPTION);
+
+        List<Posts> postList = postsRepository.findPostsByAuthor(userFacade.getCurrentUser().getAccountId());
+
+        int count = 0;
+        for(Posts check : postList){
+            if (check.getPined()) {
+                count += 1;
+            }
+        }
+        if(count == 3){
+            throw PinExceededException.EXCEPTION;
+        }
+
 
         User currentUser = userFacade.getCurrentUser();
 
-        if(!currentUser.getAccountId().equals(posts.getAuthor())) {
+        if(!currentUser.getAccountId().equals(post.getAuthor())) {
             throw PostAccessDeniedException.EXCEPTION;
         }
 
         postsRepository.save(
-                posts.updatePin()
+                post.updatePin()
         );
     }
 }

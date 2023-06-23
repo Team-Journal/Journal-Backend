@@ -19,7 +19,9 @@ public enum ErrorCode {
     PASSWORD_NOT_MATCH(401, "AUTH-401-1", "Password Not Match"),
     POST_ACCESS_DENIED(403, "POST-403-1", "Access Denied"),
 
-    POST_NOT_FOUND(404, "POST-404-1", "Post Not Found");
+    POST_NOT_FOUND(404, "POST-404-1", "Post Not Found"),
+
+    POST_PIN_EXCEEDED(409, "POST-409-1", "Post Pin Exceeded");
 
     private final int status;
     private final String code;
