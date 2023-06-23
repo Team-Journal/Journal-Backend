@@ -54,8 +54,11 @@ public class User {
         this.intro = intro;
     }
 
-    public User updateIntro(String intro){
+    public void updateIntro(String intro){
         this.intro = intro;
-        return this;
+    }
+
+    public void updatePass(String password){
+        this.password = password;
     }
 }

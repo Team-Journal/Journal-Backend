@@ -3,6 +3,7 @@ package com.example.journal.domain.user.present;
 import com.example.journal.domain.user.present.dto.request.SignInRequestDto;
 import com.example.journal.domain.user.present.dto.request.SignUpRequestDto;
 import com.example.journal.domain.user.present.dto.request.UpdateIntroRequest;
+import com.example.journal.domain.user.present.dto.request.UpdatePasswordRequest;
 import com.example.journal.domain.user.present.dto.response.TokenResponse;
 import com.example.journal.domain.user.service.SignInService;
 import com.example.journal.domain.user.service.SignupService;
@@ -39,5 +40,10 @@ public class UserController {
     @PutMapping("/intro")
     public void updateIntro(@RequestBody @Valid UpdateIntroRequest request) {
         userSettingService.IntroUpdate(request);
+    }
+
+    @PutMapping("/password")
+    public void updatePass(@RequestBody @Valid UpdatePasswordRequest request){
+        userSettingService.passwordUpdate(request);
     }
 }
