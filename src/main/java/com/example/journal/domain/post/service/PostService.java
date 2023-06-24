@@ -41,7 +41,7 @@ public class PostService {
 
     @Transactional(readOnly = true)
     public PostsListResponse findPostsByAuthor(String author){
-        List<PostsResponse> postsList = postsRepository.findPostsByAuthor(author).stream()
+        List<PostsResponse> postsList = postsRepository.findPostsByAuthorOrderByPinedDescId(author).stream()
                 .map(posts -> new PostsResponse(
                         posts.getId(),
                         posts.getTitle(),
