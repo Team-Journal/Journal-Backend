@@ -89,7 +89,6 @@ public class PostService {
         postsRepository.deletePostsById(id);
     }
 
-
     @Transactional
     public void updatePin(Long id){
         Posts post = postsRepository.findPostsById(id)
@@ -103,10 +102,9 @@ public class PostService {
                 count += 1;
             }
         }
-        if(count == 3){
+        if(count <= 3){
             throw PinExceededException.EXCEPTION;
         }
-
 
         User currentUser = userFacade.getCurrentUser();
 
