@@ -39,5 +39,6 @@ public class SignInService {
                 .refreshToken(refresh)
                 .authority(user.getAuthority())
                 .build();
+
     }
 }
